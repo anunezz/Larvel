@@ -1,5 +1,3 @@
-import { throws } from "assert";
-
 //para ejecutar el programa solo es ir a la ruta del proyecto en la terminal
 //node arreglos.js
 const arreglo = [
@@ -52,4 +50,3 @@ const total = arreglo.reduce((total,item)=>{
    return total = total + item.precio;
 },0);
 //console.log(total);
-
