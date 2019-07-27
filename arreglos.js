@@ -50,3 +50,42 @@ const total = arreglo.reduce((total,item)=>{
    return total = total + item.precio;
 },0);
 //console.log(total);
+
+
+const diasInhabiles = [
+    { dia: "2019-07-07",  tipo: 2, descripcion: "informatica"},
+    { dia: "2018-08-12",  tipo: 2, descripcion: "Soporte tecnico"},
+    { dia: "2019-08-12",  tipo: 2, descripcion: "Coordinador"},
+    { dia: "2019-09-01",  tipo: 1, descripcion: "Ama de casa"},
+    { dia: "2019-07-12",  tipo: 1, descripcion: "informatica"},
+    { dia: "2019-07-27",  tipo: 1, descripcion: "informatica"},
+    { dia: "2019-08-27",  tipo: 1, descripcion: "29 de agosto del 2027"},
+    { dia: "2019-06-02",  tipo: 1, descripcion: "informdescripcion"}];
+
+var coloresDias = [];
+
+   function plecaDiasInhabiles(data = []){
+    var dia    = data.dia.split("-"),
+        Fecha = new Date(parseInt(dia[0]),parseInt(dia[1]-1),parseInt(dia[2])),
+        Hoy    = new Date(),
+        datos = {}; 
+    
+     if (Fecha == Hoy){ //Fecha == Hoy
+          datos = {color:'rojo', descripcion: data.descripcion, dia:data.dia, tipo: data.tipo  };
+        }else{ // Las fechas no son iguales
+                if (Fecha < Hoy){  // Fecha es manor que Hoy 
+                        datos = { color:'rojo', descripcion: data.descripcion, dia:data.dia,tipo: data.tipo };
+                }else{ // Fecha es mayor que hoy
+                    datos = ( data.tipo == 1 )?
+                    {color:'verde', descripcion: data.descripcion, dia:data.dia,tipo: data.tipo  } : 
+                    {color:'rojo', descripcion: data.descripcion, dia:data.dia,tipo: data.tipo  } ;
+                }
+     }   
+     return datos;
+   }   
+
+    for (let i = 0; i < diasInhabiles.length; i++) {
+        coloresDias.push( plecaDiasInhabiles(diasInhabiles[i]) );
+    }
+
+    console.table(coloresDias);
