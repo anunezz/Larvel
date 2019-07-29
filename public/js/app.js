@@ -15107,10 +15107,132 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
-  }
+    return {
+      frutas: [],
+      fruta: '',
+      total: 0
+    };
+  },
+  methods: {
+    agregarFruta: function agregarFruta(i) {
+      var me = this;
+
+      if (!me.fruta) {
+        alert("Necesitas agregar una fruta.");
+        return;
+      }
+
+      me.frutas.push({
+        id: 0,
+        nombre: me.fruta,
+        cantidad: 0,
+        estado: false
+      });
+      me.fruta = '';
+    },
+    actualizarFruta: function actualizarFruta(frutas, id) {
+      var me = this;
+      console.log(id);
+
+      if (id != 0 && id <= 0 && frutas.nombre == '') {
+        alert("Este campo no puede estar vacio.");
+        return;
+      }
+
+      alert("As actualizado esta fruta");
+    },
+    eliminarFruta: function eliminarFruta(id) {
+      console.log('eliminarFruta();');
+      console.log(id);
+      var me = this;
+      me.frutas = me.frutas.filter(function (item) {
+        return item.id != id;
+      });
+    }
+  },
+  computed: {
+    sumarFrutas: function sumarFrutas() {
+      var me = this;
+      me.total = 0;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = me.frutas[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var fruta = _step.value;
+          me.total = me.total + fruta.cantidad;
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return me.total;
+    }
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -19614,7 +19736,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nhtml, body {\n  margin: 0;\n  padding: 0;\n  font-family: \"Lucida Grande\",Helvetica,Arial,Verdana,sans-serif;\n  font-size: 14px;\n}\n#calendar {\n  max-width: 900px;\n  margin: 40px auto;\n}\n#calendar a.fc-event {\n  color: #fff; /* bootstrap default styles make it black. undo */\n}\nhtml, body {\n  margin: 0;\n  padding: 0;\n  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;\n  font-size: 14px;\n}\n#calendar {\n  max-width: 900px;\n  margin: 40px auto;\n}\n\n/*\ni wish this required CSS was better documented :(\nhttps://github.com/FezVrasta/popper.js/issues/674\nderived from this CSS on this page: https://popper.js.org/tooltip-examples.html\n*/\n.popper,\n.tooltip {\n  opacity: 1;\n  position: absolute;\n  z-index: 9999;\n  background: #FFC107;\n  color: black;\n  width: 150px;\n  border-radius: 3px;\n  box-shadow: 0 0 2px rgba(0,0,0,0.5);\n  padding: 10px;\n  text-align: center;\n}\n.style5 .tooltip {\n  background: #1E252B;\n  color: #FFFFFF;\n  max-width: 200px;\n  width: auto;\n  font-size: .8rem;\n  padding: .5em 1em;\n}\n.popper .popper__arrow,\n.tooltip .tooltip-arrow {\n  width: 0;\n  height: 0;\n  border-style: solid;\n  position: absolute;\n  margin: 5px;\n}\n.tooltip .tooltip-arrow,\n.popper .popper__arrow {\n  border-color: #FFC107;\n}\n.style5 .tooltip .tooltip-arrow {\n  border-color: #1E252B;\n}\n.popper[x-placement^=\"top\"],\n.tooltip[x-placement^=\"top\"] {\n  margin-bottom: 5px;\n}\n.popper[x-placement^=\"top\"] .popper__arrow,\n.tooltip[x-placement^=\"top\"] .tooltip-arrow {\n  border-width: 5px 5px 0 5px;\n  border-left-color: transparent;\n  border-right-color: transparent;\n  border-bottom-color: transparent;\n  bottom: -5px;\n  left: calc(50% - 5px);\n  margin-top: 0;\n  margin-bottom: 0;\n}\n.popper[x-placement^=\"bottom\"],\n.tooltip[x-placement^=\"bottom\"] {\n  margin-top: 5px;\n}\n.tooltip[x-placement^=\"bottom\"] .tooltip-arrow,\n.popper[x-placement^=\"bottom\"] .popper__arrow {\n  border-width: 0 5px 5px 5px;\n  border-left-color: transparent;\n  border-right-color: transparent;\n  border-top-color: transparent;\n  top: -5px;\n  left: calc(50% - 5px);\n  margin-top: 0;\n  margin-bottom: 0;\n}\n.tooltip[x-placement^=\"right\"],\n.popper[x-placement^=\"right\"] {\n  margin-left: 5px;\n}\n.popper[x-placement^=\"right\"] .popper__arrow,\n.tooltip[x-placement^=\"right\"] .tooltip-arrow {\n  border-width: 5px 5px 5px 0;\n  border-left-color: transparent;\n  border-top-color: transparent;\n  border-bottom-color: transparent;\n  left: -5px;\n  top: calc(50% - 5px);\n  margin-left: 0;\n  margin-right: 0;\n}\n.popper[x-placement^=\"left\"],\n.tooltip[x-placement^=\"left\"] {\n  margin-right: 5px;\n}\n.popper[x-placement^=\"left\"] .popper__arrow,\n.tooltip[x-placement^=\"left\"] .tooltip-arrow {\n  border-width: 5px 0 5px 5px;\n  border-top-color: transparent;\n  border-right-color: transparent;\n  border-bottom-color: transparent;\n  right: -5px;\n  top: calc(50% - 5px);\n  margin-left: 0;\n  margin-right: 0;\n}\n", ""]);
+exports.push([module.i, "\nhtml, body {\r\n  margin: 0;\r\n  padding: 0;\r\n  font-family: \"Lucida Grande\",Helvetica,Arial,Verdana,sans-serif;\r\n  font-size: 14px;\n}\n#calendar {\r\n  max-width: 900px;\r\n  margin: 40px auto;\n}\n#calendar a.fc-event {\r\n  color: #fff; /* bootstrap default styles make it black. undo */\n}\nhtml, body {\r\n  margin: 0;\r\n  padding: 0;\r\n  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;\r\n  font-size: 14px;\n}\n#calendar {\r\n  max-width: 900px;\r\n  margin: 40px auto;\n}\r\n\r\n/*\r\ni wish this required CSS was better documented :(\r\nhttps://github.com/FezVrasta/popper.js/issues/674\r\nderived from this CSS on this page: https://popper.js.org/tooltip-examples.html\r\n*/\n.popper,\r\n.tooltip {\r\n  opacity: 1;\r\n  position: absolute;\r\n  z-index: 9999;\r\n  background: #FFC107;\r\n  color: black;\r\n  width: 150px;\r\n  border-radius: 3px;\r\n  box-shadow: 0 0 2px rgba(0,0,0,0.5);\r\n  padding: 10px;\r\n  text-align: center;\n}\n.style5 .tooltip {\r\n  background: #1E252B;\r\n  color: #FFFFFF;\r\n  max-width: 200px;\r\n  width: auto;\r\n  font-size: .8rem;\r\n  padding: .5em 1em;\n}\n.popper .popper__arrow,\r\n.tooltip .tooltip-arrow {\r\n  width: 0;\r\n  height: 0;\r\n  border-style: solid;\r\n  position: absolute;\r\n  margin: 5px;\n}\n.tooltip .tooltip-arrow,\r\n.popper .popper__arrow {\r\n  border-color: #FFC107;\n}\n.style5 .tooltip .tooltip-arrow {\r\n  border-color: #1E252B;\n}\n.popper[x-placement^=\"top\"],\r\n.tooltip[x-placement^=\"top\"] {\r\n  margin-bottom: 5px;\n}\n.popper[x-placement^=\"top\"] .popper__arrow,\r\n.tooltip[x-placement^=\"top\"] .tooltip-arrow {\r\n  border-width: 5px 5px 0 5px;\r\n  border-left-color: transparent;\r\n  border-right-color: transparent;\r\n  border-bottom-color: transparent;\r\n  bottom: -5px;\r\n  left: calc(50% - 5px);\r\n  margin-top: 0;\r\n  margin-bottom: 0;\n}\n.popper[x-placement^=\"bottom\"],\r\n.tooltip[x-placement^=\"bottom\"] {\r\n  margin-top: 5px;\n}\n.tooltip[x-placement^=\"bottom\"] .tooltip-arrow,\r\n.popper[x-placement^=\"bottom\"] .popper__arrow {\r\n  border-width: 0 5px 5px 5px;\r\n  border-left-color: transparent;\r\n  border-right-color: transparent;\r\n  border-top-color: transparent;\r\n  top: -5px;\r\n  left: calc(50% - 5px);\r\n  margin-top: 0;\r\n  margin-bottom: 0;\n}\n.tooltip[x-placement^=\"right\"],\r\n.popper[x-placement^=\"right\"] {\r\n  margin-left: 5px;\n}\n.popper[x-placement^=\"right\"] .popper__arrow,\r\n.tooltip[x-placement^=\"right\"] .tooltip-arrow {\r\n  border-width: 5px 5px 5px 0;\r\n  border-left-color: transparent;\r\n  border-top-color: transparent;\r\n  border-bottom-color: transparent;\r\n  left: -5px;\r\n  top: calc(50% - 5px);\r\n  margin-left: 0;\r\n  margin-right: 0;\n}\n.popper[x-placement^=\"left\"],\r\n.tooltip[x-placement^=\"left\"] {\r\n  margin-right: 5px;\n}\n.popper[x-placement^=\"left\"] .popper__arrow,\r\n.tooltip[x-placement^=\"left\"] .tooltip-arrow {\r\n  border-width: 5px 0 5px 5px;\r\n  border-top-color: transparent;\r\n  border-right-color: transparent;\r\n  border-bottom-color: transparent;\r\n  right: -5px;\r\n  top: calc(50% - 5px);\r\n  margin-left: 0;\r\n  margin-right: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -51242,7 +51364,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row p-3" }, [
-    _c("div", { staticClass: "col-md-4" }, [_vm._v("\n  assa\n")]),
+    _c("div", { staticClass: "col-md-4" }, [_vm._v("\r\n  assa\r\n")]),
     _vm._v(" "),
     _c("div", { staticClass: "col-md-8" }, [
       _vm._m(0),
@@ -51520,19 +51642,248 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row p-3" },
-    [_vm._m(0), _vm._v(" "), _c("vueexhijo")],
-    1
-  )
+  return _c("div", { staticClass: "row p-3" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "input-group mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.fruta,
+                expression: "fruta"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Agregar fruta",
+              "aria-label": "Agregar fruta",
+              "aria-describedby": "basic-addon2"
+            },
+            domProps: { value: _vm.fruta },
+            on: {
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.agregarFruta($event)
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.fruta = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-append" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-secondary btn-primary",
+                staticStyle: { color: "#fff" },
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.agregarFruta()
+                  }
+                }
+              },
+              [_vm._v("Agregar")]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-12" }, [
+      _c(
+        "ul",
+        { staticClass: "list-group" },
+        [
+          _vm._l(_vm.frutas, function(item, index) {
+            return _c("li", { key: index, staticClass: "list-group-item" }, [
+              _c(
+                "div",
+                {
+                  class: [
+                    "row",
+                    "justify-content-between",
+                    "aling-item-center",
+                    "alert",
+                    item.estado ? "alert-success" : "alert-danger"
+                  ],
+                  attrs: { role: "alert" }
+                },
+                [
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("input", {
+                      attrs: { type: "hidden" },
+                      domProps: { value: (item.id = index) }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: item.nombre,
+                          expression: "item.nombre"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Fruta",
+                        "aria-label": "Fruta",
+                        "aria-describedby": "Nombre de la fruta"
+                      },
+                      domProps: { value: item.nombre },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(item, "nombre", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "input-group has-error" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.number",
+                            value: item.cantidad,
+                            expression: "item.cantidad",
+                            modifiers: { number: true }
+                          }
+                        ],
+                        staticClass: "form-control number",
+                        attrs: {
+                          type: "text",
+                          required: "",
+                          placeholder: "Recipient's username",
+                          "aria-label": "Recipient's username",
+                          "aria-describedby": "basic-addon2"
+                        },
+                        domProps: { value: item.cantidad },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              item,
+                              "cantidad",
+                              _vm._n($event.target.value)
+                            )
+                          },
+                          blur: function($event) {
+                            return _vm.$forceUpdate()
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group-append" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-outline-secondary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                item.cantidad++
+                              }
+                            }
+                          },
+                          [_vm._v("+")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-outline-secondary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                item.cantidad > 0 ? item.cantidad-- : 0
+                              }
+                            }
+                          },
+                          [_vm._v("-")]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.eliminarFruta(item.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Eliminar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: {
+                          click: function($event) {
+                            return _vm.actualizarFruta(_vm.frutas, item.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Actualizar")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          }),
+          _vm._v(" "),
+          _c("li", { staticClass: "list-group-item" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("strong", [_vm._v("Toatal: ")]),
+                _vm._v(" " + _vm._s(_vm.sumarFrutas) + "\r\n                ")
+              ])
+            ])
+          ])
+        ],
+        2
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [_c("nav", [_vm._v("Numero:")])])
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("h2", [_vm._v("Ejercicios vue.js")]),
+      _vm._v(" "),
+      _c("hr")
+    ])
   }
 ]
 render._withStripped = true
@@ -63719,17 +64070,19 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
+// import locale from 'element-ui/lib/locale/lang/es';
+// Vue.use(ElementUI, { locale });
+
 Vue.component('fullcalendar-component', __webpack_require__(/*! ./components/FullCalendar.vue */ "./resources/js/components/FullCalendar.vue")["default"]);
 Vue.component('Padre', __webpack_require__(/*! ./components/EjemploPadre.vue */ "./resources/js/components/EjemploPadre.vue")["default"]);
 Vue.component('ejemplo-component', __webpack_require__(/*! ./components/Ejemplo.vue */ "./resources/js/components/Ejemplo.vue")["default"]); //Ejercicio de vueJS
 
 Vue.component('vueex', __webpack_require__(/*! ./components/VueEX.vue */ "./resources/js/components/VueEX.vue")["default"]);
 Vue.component('vueexhijo', __webpack_require__(/*! ./components/VueEXhijo.vue */ "./resources/js/components/VueEXhijo.vue")["default"]);
-var store = new Vuex.Store({});
 var app = new Vue({
-  el: '#app',
-  store: store
+  el: '#app'
 });
 
 /***/ }),

@@ -11,8 +11,8 @@
 <body>
     <div class="container" id="app">
         <vueex></vueex>
-        
     </div>
+    
     <script src="js/app.js"></script>
     <script src="js/plantilla.js"></script> 
 </body>

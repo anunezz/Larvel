@@ -1,6 +1,4 @@
 <?php
-
-
 Route::get('/', function () {
     return view('principal');
 });
@@ -50,5 +48,4 @@ Route::get('contacto/{nombre?}/{edad?}',function($nombre ='adrian',$edad = 25){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/VueEx',"vueExController@index");

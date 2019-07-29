@@ -65,10 +65,10 @@ const diasInhabiles = [
 var coloresDias = [];
 
    function plecaDiasInhabiles(data = []){
-    var dia    = data.dia.split("-"),
-        Fecha = new Date(parseInt(dia[0]),parseInt(dia[1]-1),parseInt(dia[2])),
-        Hoy    = new Date(),
-        datos = {}; 
+    var dia = data.dia.split("-"),
+    Fecha   = new Date(parseInt(dia[0]),parseInt(dia[1]-1),parseInt(dia[2])),
+    Hoy     = new Date(),
+    datos   = {}; 
     
      if (Fecha == Hoy){ //Fecha == Hoy
           datos = {color:'rojo', descripcion: data.descripcion, dia:data.dia, tipo: data.tipo  };
