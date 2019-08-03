@@ -48,6 +48,23 @@
         </li>
     </ul>
 </div>
+
+<div class="col-md-12">
+
+<el-tree
+  :props="props"
+  :load="loadNode"
+  lazy
+  node-key="id"
+  ref="tree"
+  highlight-current
+  @check-change="handleCheckChange"
+  show-checkbox>
+</el-tree>
+
+
+</div>
+
 <!-- <vueexhijo></vueexhijo> -->
 </div>
 
@@ -61,7 +78,21 @@ data(){
     return{
     frutas:[],
     fruta:'',
-    total:0
+    total:0,
+
+
+
+         props: {
+          label: 'name',
+          children: 'zones',
+          isLeaf: 'leaf',
+          id:"2"
+        },
+
+
+
+
+
     }
 },
 methods:{
@@ -91,7 +122,67 @@ console.log(id);
 let me = this;
     me.frutas = me.frutas.filter(item => item.id != id);
     
-}
+},
+      handleCheckChange(data, checked, indeterminate) {
+    
+        var arraySelect = [];
+       
+         if(checked){
+                               
+           var seleccionado = this.$refs.tree.getCheckedKeys();
+
+           arraySelect.push(seleccionado);
+
+     
+  
+             this.$refs.tree.setCheckedKeys([1]);
+           //  data = data.map(item => item.id   );
+             checked = true;
+
+         }
+
+         
+        
+        console.log("#SELECYYY");
+        console.log(arraySelect);
+
+
+      },
+
+      loadNode(node, resolve) {
+        if (node.level === 0) {
+
+           const dataa = [{
+            name: 'leafsss',
+            leaf: false,
+            id: 1
+          }, {
+            name: 'zoneeee',
+            leaf: false,
+            id: 2
+          }];
+
+          return resolve(dataa);
+        }
+
+
+        if (node.level > 1) return resolve([]);
+
+        setTimeout(() => {
+          const data = [{
+            name: 'leaf',
+            leaf: true,
+            id:3
+          }, {
+            name: 'zone',
+            leaf: true,
+            id:4
+          }];
+
+          resolve(data);
+        }, 500);
+
+      }
 
 
 },

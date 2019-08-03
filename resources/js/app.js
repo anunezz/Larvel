@@ -3,10 +3,10 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
-// import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css';
-// import locale from 'element-ui/lib/locale/lang/es';
-// Vue.use(ElementUI, { locale });
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/es';
+Vue.use(ElementUI, { locale });
 
 Vue.component('fullcalendar-component', require('./components/FullCalendar.vue').default);
 Vue.component('Padre', require('./components/EjemploPadre.vue').default);
