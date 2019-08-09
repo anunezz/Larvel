@@ -54,7 +54,8 @@
   <hr>
 </div>
 
-<div class="col-md-3">
+
+<div class="col-md-2">
   <el-tree
     :check-on-click-node="true"
     :draggable="false"
@@ -71,29 +72,87 @@
 </div>
 
 
-<div class="col-md-9">
+<div class="col-md-12">
+
+
+
+ <el-table
+    ref="multipleTable"
+    :data="tableData"
+    style="width: 100%"
+    @selection-change="handleSelectionChange">
+    <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column
+      label="Fecha"
+      width="120">
+      <template slot-scope="scope">{{ scope.row.date }}</template>
+    </el-table-column>
+    <el-table-column
+      property="name"
+      label="Nombre"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      property="address"
+      label="Dirección"
+      show-overflow-tooltip>
+    </el-table-column>
+  </el-table>
+
+
+ <div class="row">
+   <div class="col-md-12 pull-left">
+    <button class="btn btn-success" @click="obtenerCheck()"  >
+      Obtener
+    </button>
+   </div>
+ </div>
+
+
+</div>
+
+
+
+
+<div class="col-md-10">
   <div class="row" v-for="(item,index) of formDatos" :key="index">
 
   <input type="hidden" v-model="item.id_oficina" required>
  
-  <div class="form-group col-md-6">
-    <label for="estado">País:</label>
-        <el-select filterable class="id_pais"
-                   v-model="item.id_pais"
-                   placeholder="Selecciona un país" 
-                   style="width: 100%;">
-        <el-option value="">Seleccione una opción</el-option>
-            <el-option v-for="item in paises"
-                       :key="item.id_pais"
-                       :label="item.cad_nombre_es+' '+item.id_pais"
-                       :value="item.id_pais">
-        </el-option>
-        </el-select>
-        <span class="msj_id_pais"></span>
-  </div>
+<el-form :model="ruleForm" :rules="rules" ref="ruleForm" status-icon label-width="120px" :inline="true" class="demo-form-inline">
+
+   <el-form-item label="Pais" prop="id_pais" >
+    <el-select v-model="ruleForm.id_pais" placeholder="Selecciona un pais" filterable>
+      <el-option label="Selecciona una opcion" value="" ></el-option>
+      <el-option v-for="item in paises"  :key="item.id_pais"
+                          :label="item.cad_nombre_es+' '+item.id_pais"
+                          :value="item.id_pais"></el-option>
+    </el-select>
+  </el-form-item> 
 
 
-<div class="form-group col-md-6 has-danger" v-if=" estados.length > 0 ">
+   <el-form-item label="Estado" prop="id_estado" v-if=" estados.length > 0 ">
+    <el-select v-model="ruleForm.id_estado" placeholder="Selecciona un pais" filterable>
+      <el-option label="Selecciona una opcion" value="" ></el-option>
+      <el-option v-for="item in estados"
+               :key="item.id_entidad"
+               :label="item.cad_entidad+' '+item.id_entidad"
+               :value="item.id_entidad"></el-option>
+    </el-select>
+  </el-form-item>  
+
+
+
+   <el-form-item>
+    <el-button type="primary" @click="submitForm('ruleForm')">Create</el-button>
+  </el-form-item>
+
+</el-form>
+
+<div class="form-group col-md-12 has-danger" v-if=" estados.length > 0 ">
   <label for="estado">Estado:</label>
     <el-select class="id_estados"
                v-model="estado" 
@@ -183,7 +242,8 @@
   </div>
 
   <div class="col-md-12 pull-right">
-     <button type="button" class="btn btn-primary" @click="actualizarDatos(formDatos,estado,delegacion,local)">Actualizar</button>
+     <!-- <button class="btn btn-success" @click="submitForm('ruleForm')">Actualizar</button>     -->
+     <button type="button" class="btn btn-primary" @click="actualizarDatos('ruleForm',formDatos,estado,delegacion,local)">Actualizar</button>
   </div>
 
   </div>
@@ -199,10 +259,78 @@
 export default {
 data(){
     return{
+
+
+
+
+
+
+tableData: [{
+          date: '2016-05-03',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+          marcado:1,
+          id:0
+        }, {
+          date: '2016-05-02',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+          marcado:0,
+          id:1
+        }, {
+          date: '2016-05-04',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+          marcado:0,
+          id:2
+        }, {
+          date: '2016-05-01',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+          marcado:0,
+          id:3
+        }, {
+          date: '2016-05-08',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+          marcado:1,
+          id:4
+        }, {
+          date: '2016-05-06',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+          marcado:0,
+          id:5
+        }, {
+          date: '2016-05-07',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+          marcado:0,
+          id:6
+        }],
+        multipleSelection: [],
+        arrayCheck:[],
+
+
+
+
+
     frutas:[],
     fruta:'',
     total:0,
 
+
+ruleForm: { id_pais: 142,
+ id_estado:53},
+
+        rules: {
+          id_pais: [
+            { required: true, message: 'Selecciona una opción', trigger: 'change' }
+          ],
+         id_estado: [
+            { required: true, message: 'Selecciona una opción', trigger: 'change' }
+          ],
+        },
 //FORMULARIO
  formDatos:[{ id_pais:142,id_oficina:23,
              id_estados:53,id_localidad:23,
@@ -245,6 +373,53 @@ local:12,
     }
 },
 methods:{
+obtenerCheck(){
+let me = this;
+
+  for (let t = 0; t < me.tableData.length; t++) {
+       me.tableData[t].marcado = 0;
+        for (let r = 0; r < me.arrayCheck.length; r++) {
+
+          if(me.tableData[t].id == me.arrayCheck[r].id){
+              me.tableData[t].marcado = 1;
+          }
+  
+        }
+  }
+
+console.log("#############ksjdkjdskjsdjk#################");
+console.table( me.tableData);
+
+},
+      toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
+      handleSelectionChange(val) {
+       let me = this;
+
+      me.arrayCheck = val;
+       
+
+        this.multipleSelection = val;
+      },
+
+
+       submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
 agregarFruta(i){
     let me = this;
     if(!me.fruta){
@@ -274,12 +449,18 @@ let me = this;
 },
 handleCheckChange(data, checked, indeterminate) {
     var c = '';
-    if(checked){
-    console.log(data.$treeNodeId);
-    c = data.$treeNodeId;
-    this.$refs.tree.setCheckedKeys([c]);
-    console.log("checked "+checked);
-    }
+     this.$refs.tree.setCheckedKeys([]);
+    console.log(data, checked, indeterminate);
+      if(checked){
+      console.log("CHEKEADO: "+data.$treeNodeId);
+      c = data.$treeNodeId;
+
+        setTimeout(()=>{
+          console.log("######## yyyyyyyyyy  ############");
+        this.$refs.tree.setCheckedKeys([c]);
+        },1000);
+    
+      }
   
 },
       loadNode(node, resolve) {
@@ -549,3 +730,6 @@ border: 2px #d9534f solid !important;
  }
 
 </style>
+
+
+
