@@ -49,3 +49,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/VueEx',"vueExController@index");
+Route::get('/form', function () {
+    return view('cursoVue.form');
+});

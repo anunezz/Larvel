@@ -64,8 +64,10 @@
     lazy
     node-key="id"
     ref="tree"
+    :default-checked-keys="marcados"
     highlight-current
     @check-change="handleCheckChange"
+    @check="check"
     :check-strictly="true"
     show-checkbox>
   </el-tree>
@@ -255,6 +257,7 @@
 </template>
 
 <script>
+import { setTimeout, setInterval, clearInterval } from 'timers';
 
 export default {
 data(){
@@ -360,6 +363,8 @@ localidad:[{id_entidad:12,cad_entidad:"Janitzio"},
 local:12,
 //FORMULARIO
 
+marcados:[],
+
 
 
          props: {
@@ -373,22 +378,48 @@ local:12,
     }
 },
 methods:{
+check(i,v){
+  v.checkedKeys=[];
+console.log("####################");
+console.log("Nodo checado ");
+console.log(i);
+console.log("nodo");
+console.log(v);
+v.checkedNodes = [];
+console.log(v.checkedNodes);
+this.$refs.tree.setCheckedNodes([i]);
+  setTimeout(()=>{
+     this.$refs.tree.setCheckedNodes([i]);
+  },500);
+
+},
 obtenerCheck(){
 let me = this;
 
-  for (let t = 0; t < me.tableData.length; t++) {
-       me.tableData[t].marcado = 0;
-        for (let r = 0; r < me.arrayCheck.length; r++) {
+  // for (let t = 0; t < me.tableData.length; t++) {
+  //      me.tableData[t].marcado = 0;
+  //       for (let r = 0; r < me.arrayCheck.length; r++) {
 
-          if(me.tableData[t].id == me.arrayCheck[r].id){
-              me.tableData[t].marcado = 1;
-          }
+  //         if(me.tableData[t].id == me.arrayCheck[r].id){
+  //             me.tableData[t].marcado = 1;
+  //         }
   
-        }
-  }
+  //       }
+  // }
+
+
+  me.tableData = me.tableData.map(item => {
+      item.marcado = 0;
+      for (let i = 0; i < me.arrayCheck.length; i++) {
+         if(me.arrayCheck[i].id == item.id){
+           item.marcado = 1;
+         }
+      }
+      return {...item, macado:item.marcado};
+  });
 
 console.log("#############ksjdkjdskjsdjk#################");
-console.table( me.tableData);
+console.table( me.tableData.get);
 
 },
       toggleSelection(rows) {
@@ -448,18 +479,18 @@ let me = this;
     
 },
 handleCheckChange(data, checked, indeterminate) {
-    var c = '';
-     this.$refs.tree.setCheckedKeys([]);
-    console.log(data, checked, indeterminate);
-      if(checked){
-      console.log("CHEKEADO: "+data.$treeNodeId);
-      c = data.$treeNodeId;
+  let me = this;  
+      if(checked && data.$treeNodeId != ''){ 
+        
+      
+        console.log("CHEKEADO: "+data.$treeNodeId);
+       
+      
+  
+      }else{
 
-        setTimeout(()=>{
-          console.log("######## yyyyyyyyyy  ############");
-        this.$refs.tree.setCheckedKeys([c]);
-        },1000);
-    
+
+        checked = false;
       }
   
 },
@@ -467,6 +498,7 @@ handleCheckChange(data, checked, indeterminate) {
        console.log(node);
 
         if (node.level === 0) {
+           
            const dataa = [{
             name: 'rama 1',
             leaf: false,
@@ -571,6 +603,7 @@ if(data[0].id_localidad == ''){
 }
 
 if (data[0].cad_correo_electronico.length == 0){
+  
   $(".cad_correo_electronico").addClass("input-error");
     $(".msj_cad_correo_electronico").empty();
     $(".msj_cad_correo_electronico").append(vacio);

@@ -14,7 +14,7 @@ Vue.component('ejemplo-component', require('./components/Ejemplo.vue').default);
 //Ejercicio de vueJS
 Vue.component('vueex', require('./components/VueEX.vue').default);
 Vue.component('vueexhijo', require('./components/VueEXhijo.vue').default);
-
+Vue.component('form-component', require('./components/form.vue').default);
 
 
 const app = new Vue({
