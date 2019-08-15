@@ -16728,8 +16728,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! timers */ "./node_modules/timers-browserify/main.js");
-/* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(timers__WEBPACK_IMPORTED_MODULE_0__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { if (i % 2) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } else { Object.defineProperties(target, Object.getOwnPropertyDescriptors(arguments[i])); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -16990,9 +16988,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -17134,8 +17129,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     check: function check(i, v) {
-      var _this = this;
-
       v.checkedKeys = [];
       console.log("####################");
       console.log("Nodo checado ");
@@ -17143,11 +17136,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log("nodo");
       console.log(v);
       v.checkedNodes = [];
-      console.log(v.checkedNodes);
-      this.$refs.tree.setCheckedNodes([i]);
-      Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
-        _this.$refs.tree.setCheckedNodes([i]);
-      }, 500);
     },
     obtenerCheck: function obtenerCheck() {
       var me = this; // for (let t = 0; t < me.tableData.length; t++) {
@@ -17176,11 +17164,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.table(me.tableData.get);
     },
     toggleSelection: function toggleSelection(rows) {
-      var _this2 = this;
+      var _this = this;
 
       if (rows) {
         rows.forEach(function (row) {
-          _this2.$refs.multipleTable.toggleRowSelection(row);
+          _this.$refs.multipleTable.toggleRowSelection(row);
         });
       } else {
         this.$refs.multipleTable.clearSelection();
@@ -17239,10 +17227,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     handleCheckChange: function handleCheckChange(data, checked, indeterminate) {
       var me = this;
 
-      if (checked && data.$treeNodeId != '') {
+      if (checked) {
+        console.log("data");
+        console.log(data);
+        me.marcados = [];
+        me.marcados = this.$refs.tree.getCheckedNodes(); //  this.$refs.tree.setCheckedKeys(me.marcados);
+
+        console.log(this.$refs.tree.getCheckedNodes());
+        console.log(this.$refs.tree.getCheckedKeys());
+        this.$refs.tree.setCheckedNodes(me.marcados);
         console.log("CHEKEADO: " + data.$treeNodeId);
-      } else {
-        checked = false;
       }
     },
     loadNode: function loadNode(node, resolve) {
@@ -17266,7 +17260,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (node.level > 1) return resolve([]);
-      Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
+      setTimeout(function () {
         var data = [{
           name: 'leaf',
           leaf: true,
@@ -17584,8 +17578,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   data: function data() {
@@ -17631,6 +17623,20 @@ __webpack_require__.r(__webpack_exports__);
           trigger: 'blur'
         }]
       },
+      correo: function correo(rule, value, callback) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(value) == false) {
+          return callback(new Error('Correo electónico incorrecto.'));
+        } else {
+          callback();
+        }
+      },
+      telefono: function telefono(rule, value, callback) {
+        if (/^([0-9]{5})+((-{1})*)+([0-9]{6})$/i.test(value) == false) {
+          return callback(new Error('Teléfono formato incorrecto.'));
+        } else {
+          callback();
+        }
+      },
       tipoContacto: ''
     };
   },
@@ -17660,7 +17666,8 @@ __webpack_require__.r(__webpack_exports__);
           key: Date.now(),
           value: '',
           label: "Correo electrónico",
-          tipo: 2
+          tipo: 2,
+          reg: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/
         });
       } else if (me.tipoContacto == '') {
         alert("Selecciona un tipo de contacto.");
@@ -112560,12 +112567,11 @@ var render = function() {
             load: _vm.loadNode,
             lazy: "",
             "node-key": "id",
-            "default-checked-keys": _vm.marcados,
             "highlight-current": "",
             "check-strictly": true,
             "show-checkbox": ""
           },
-          on: { "check-change": _vm.handleCheckChange, check: _vm.check }
+          on: { "check-change": _vm.handleCheckChange }
         })
       ],
       1
@@ -113376,15 +113382,13 @@ var render = function() {
                             prop: "domains." + index + ".value",
                             rules: [
                               {
+                                type: "string",
                                 required: true,
-                                message: "Este campo no puede estar vacio.",
-                                trigger: "blur"
+                                message: "Este campo no puede estar vacio"
                               },
                               {
-                                min: 8,
-                                max: 15,
-                                message: "Length should be 3 to 5",
-                                trigger: "blur"
+                                validator: _vm.telefono,
+                                trigger: ["blur", "change"]
                               }
                             ]
                           }
@@ -113439,13 +113443,12 @@ var render = function() {
                             prop: "domains." + index + ".value",
                             rules: [
                               {
+                                type: "string",
                                 required: true,
-                                message: "Este campo no puede estar vacio.",
-                                trigger: "blur"
+                                message: "Este campo no puede estar vacio"
                               },
                               {
-                                type: "email",
-                                message: "Este no es un correo electrónico",
+                                validator: _vm.correo,
                                 trigger: ["blur", "change"]
                               }
                             ]

@@ -54,7 +54,7 @@
   <hr>
 </div>
 
-
+  <!-- :default-checked-keys="marcados" -->
 <div class="col-md-2">
   <el-tree
     :check-on-click-node="true"
@@ -64,10 +64,8 @@
     lazy
     node-key="id"
     ref="tree"
-    :default-checked-keys="marcados"
     highlight-current
     @check-change="handleCheckChange"
-    @check="check"
     :check-strictly="true"
     show-checkbox>
   </el-tree>
@@ -257,17 +255,11 @@
 </template>
 
 <script>
-import { setTimeout, setInterval, clearInterval } from 'timers';
+
 
 export default {
 data(){
     return{
-
-
-
-
-
-
 tableData: [{
           date: '2016-05-03',
           name: 'Tom',
@@ -386,11 +378,7 @@ console.log(i);
 console.log("nodo");
 console.log(v);
 v.checkedNodes = [];
-console.log(v.checkedNodes);
-this.$refs.tree.setCheckedNodes([i]);
-  setTimeout(()=>{
-     this.$refs.tree.setCheckedNodes([i]);
-  },500);
+
 
 },
 obtenerCheck(){
@@ -480,17 +468,17 @@ let me = this;
 },
 handleCheckChange(data, checked, indeterminate) {
   let me = this;  
-      if(checked && data.$treeNodeId != ''){ 
-        
-      
+      if(checked){ 
+        console.log("data");
+        console.log(data);
+        me.marcados=[];
+        me.marcados = this.$refs.tree.getCheckedNodes();
+       //  this.$refs.tree.setCheckedKeys(me.marcados);
+          console.log(this.$refs.tree.getCheckedNodes());
+          console.log(this.$refs.tree.getCheckedKeys());
+           this.$refs.tree.setCheckedNodes(me.marcados);
         console.log("CHEKEADO: "+data.$treeNodeId);
-       
       
-  
-      }else{
-
-
-        checked = false;
       }
   
 },

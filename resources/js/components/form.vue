@@ -26,12 +26,10 @@
         <el-button type="primary" @click="addDomain(tipoContacto)">Agregar</el-button>
     </div>
     <div style="margin-top: 15px;" v-for="(item, index) in ruleForm.domains" :key="item.key">
-<!-- {  type: 'number', message: 'formato invalido.', trigger: ['blur', 'change'] }, -->
         <label for="">{{item.label}}</label>
         <el-form-item :prop=" 'domains.' + index + '.value' "
-            :rules="[{ required: true, message: 'Este campo no puede estar vacio.', trigger: 'blur'},          
-                     { min: 8, max: 15, message: 'Length should be 3 to 5', trigger: 'blur' }]" 
-            v-if="item.tipo == 1">
+            v-if="item.tipo == 1" :rules="[{type: 'string', required: true, message:'Este campo no puede estar vacio'},
+                    { validator : telefono ,trigger: ['blur', 'change'] }]">
             <el-input type="text" 
                       v-model="item.value" 
                       minlength="8" maxlength="15" 
@@ -43,8 +41,8 @@
                       </el-input>
         </el-form-item> 
         <el-form-item :prop=" 'domains.' + index + '.value' "
-            :rules="[{ required: true, message: 'Este campo no puede estar vacio.', trigger: 'blur'},
-                    { type: 'email', message: 'Este no es un correo electrónico', trigger: ['blur', 'change'] }]" 
+            :rules="[{type: 'string', required: true, message:'Este campo no puede estar vacio'},
+                    { validator : correo ,trigger: ['blur', 'change'] }]" 
             v-else-if="item.tipo == 2">
             <el-input type="email" v-model="item.value" :placeholder="item.label" autocomplete="off" :clearable="true">
                 <el-button type="danger" slot="append" icon="el-icon-circle-close" @click.prevent="removeDomain(item)"></el-button> 
@@ -113,6 +111,20 @@ export default {
            { validator: name, trigger: 'blur' }
           ]
         },
+        correo: (rule, value, callback) => {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(value) == false) {
+          return callback(new Error('Correo electónico incorrecto.'));
+        }else{
+             callback();
+        }
+      },
+      telefono:(rule, value, callback) => {
+        if (/^([0-9]{5})+((-{1})*)+([0-9]{6})$/i.test(value) == false) {
+          return callback(new Error('Teléfono formato incorrecto.'));
+        }else{
+             callback();
+        }
+      },
         tipoContacto:''
     }
   },
@@ -130,7 +142,13 @@ addDomain(tipoContacto){
    if(tipoContacto == 1 && me.tipoContacto != ''){
       this.ruleForm.domains.push({ key: Date.now(), value: '', label:"Teléfono",tipo: 1});
    } if(tipoContacto == 2 && me.tipoContacto != ''){
-      this.ruleForm.domains.push({ key: Date.now(), value: '', label:"Correo electrónico",tipo: 2});
+      this.ruleForm.domains.push({ 
+        key: Date.now(), 
+        value: '', 
+        label:"Correo electrónico",
+        tipo: 2,
+        reg: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/
+        });
    }else if(me.tipoContacto == ''){
      alert("Selecciona un tipo de contacto.");
    }
