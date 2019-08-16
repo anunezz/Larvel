@@ -29,7 +29,7 @@
         <label for="">{{item.label}}</label>
         <el-form-item :prop=" 'domains.' + index + '.value' "
             v-if="item.tipo == 1" :rules="[{type: 'string', required: true, message:'Este campo no puede estar vacio'},
-                    { validator : telefono ,trigger: ['blur', 'change'] }]">
+                    { trigger: ['blur', 'change'],pattern: item.exp ,message:'Correo electronico invalido' }]">
             <el-input type="text" 
                       v-model="item.value" 
                       minlength="8" maxlength="15" 
@@ -68,7 +68,7 @@ export default {
   },
   data() {
 
-      var name = (rule, value, callback) => {
+      var name = (rule, value, callback,source,options) => {
           console.log("value....");
           console.log(value);
         if (!value) {
@@ -100,6 +100,7 @@ export default {
               key: 1,
               value: 0,
               label:"Teléfono",
+              exp:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/,
               tipo: 1,
               nombre: ''
              }],

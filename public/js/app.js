@@ -17581,7 +17581,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   data: function data() {
-    var name = function name(rule, value, callback) {
+    var name = function name(rule, value, callback, source, options) {
       console.log("value....");
       console.log(value);
 
@@ -17611,6 +17611,7 @@ __webpack_require__.r(__webpack_exports__);
           key: 1,
           value: 0,
           label: "Teléfono",
+          exp: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/,
           tipo: 1,
           nombre: ''
         }],
@@ -113387,8 +113388,9 @@ var render = function() {
                                 message: "Este campo no puede estar vacio"
                               },
                               {
-                                validator: _vm.telefono,
-                                trigger: ["blur", "change"]
+                                trigger: ["blur", "change"],
+                                pattern: item.exp,
+                                message: "Correo electronico invalido"
                               }
                             ]
                           }
