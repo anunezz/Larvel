@@ -1,14 +1,10 @@
 <template>
 <div class="row p-3">
 
-<div class="col-md-4">
-  assa
-</div>
-
-<div class="col-md-8">
+<div class="col-md-12">
 
 <div class="col-md-12">
-  <h2>Registrar dias inhabiles paises.</h2>
+  <h2>Registrar dias inhabiles paises. {{ Fdia }}</h2>
   <hr>
 </div>
 
@@ -19,6 +15,7 @@
 </div>
 <div class="col-md-12">
     <FullCalendar 
+    ref="calendario"
     :locale="'es'"
     :buttonText="{
       today:    'Dia actual',
@@ -26,12 +23,12 @@
       prev:      'Anterior Mes',
       next:      'Proximo Mes',
       prevYear:  'Anterior Año',
-      nextYear:  'Proximo Año'
+      nextYear:  'Proximo Año',
      }"
     :header=" {
       left: 'title',
       center: '',
-      right: 'prevYear prev today next  nextYear'
+      right: 'prevYear prev proxmes today next  nextYear'
     }"
     :contentHeight="300"
     :eventRender="Tool"
@@ -46,6 +43,17 @@
     :selectMirror="false" 
     :events="arrayDiasInhabiles"
     :config="config"
+    :customButtons="{
+      proxmes: {
+        text: 'Próximo mes',
+        click: ()=> {
+          console.log('clicked custom button 1!');
+        }
+      },
+
+
+
+    }"
     />
 </div> 
 
@@ -315,7 +323,77 @@ methods: {
       //   trigger: 'hover',
       //   container: 'body'
       // });
-  }
+  },
+ajustarDiaDatePicker(fecha){
+    let meses = [
+      { id:0,  name: "enero"       , dia: "01"},
+      { id:1,  name: "febrero"     , dia: "01"},
+      { id:2,  name: "marzo"       , dia: "01"},
+      { id:3,  name: "abril"       , dia: "01"},
+      { id:4,  name: "mayo"        , dia: "01"},
+      { id:5,  name: "junio"       , dia: "01"},
+      { id:6,  name: "julio"       , dia: "01"},
+      { id:7,  name: "agosto"      , dia: "01"},
+      { id:8,  name: "septiembre"  , dia: "01"},
+      { id:9,  name: "octubre"     , dia: "01"},
+      { id:10, name: "noviembre"   , dia: "01"},
+      { id:11, name: "diciembre"   , dia: "01"},
+    ],buscar = '';
+    console.log("funcion fecha");
+    fecha = fecha.split(" ");
+    // console.log(fecha[0]);
+    // console.log(fecha[2]);
+    buscar = meses.find( (item) => item.name === fecha[0] );
+    console.log(buscar);
+    
+    var nuevaFecha = new Date(fecha[2],buscar.id,1);
+
+    console.log(nuevaFecha);
+   // console.log( nuevaFecha  );
+
+   return nuevaFecha;
+}
+
+
+
+},
+computed:{
+Fdia(){
+  console.log("computed !!!!!!!!!!!!!");
+  var r = this.$refs.calendario;
+
+  //console.log(r.$el.textContent); 
+  console.log(r); 
+
+  return r;
+
+}
+},
+
+
+mounted(){
+  console.log("mounted !!!!!!!!!!!!!");
+  var r = this.$refs.calendario;
+
+  console.log(r.$el.textContent);
+
+
+var button = $(".fc-button");
+
+button.css("background-color","#5cb85c !important}");
+
+ var l = $(".fc-left h2").text();
+
+  console.log("Fecha");
+  console.log(l);
+
+
+this.ajustarDiaDatePicker(l);
+
+// console.log("buttonm");
+// console.log(button);
+
+ console.log( this.Fdia );
 
 }
   

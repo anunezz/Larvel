@@ -16487,6 +16487,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
  //import FullCalendar from 'element-ui';
 
@@ -16713,7 +16721,94 @@ __webpack_require__.r(__webpack_exports__);
       //   trigger: 'hover',
       //   container: 'body'
       // });
+    },
+    ajustarDiaDatePicker: function ajustarDiaDatePicker(fecha) {
+      var meses = [{
+        id: 0,
+        name: "enero",
+        dia: "01"
+      }, {
+        id: 1,
+        name: "febrero",
+        dia: "01"
+      }, {
+        id: 2,
+        name: "marzo",
+        dia: "01"
+      }, {
+        id: 3,
+        name: "abril",
+        dia: "01"
+      }, {
+        id: 4,
+        name: "mayo",
+        dia: "01"
+      }, {
+        id: 5,
+        name: "junio",
+        dia: "01"
+      }, {
+        id: 6,
+        name: "julio",
+        dia: "01"
+      }, {
+        id: 7,
+        name: "agosto",
+        dia: "01"
+      }, {
+        id: 8,
+        name: "septiembre",
+        dia: "01"
+      }, {
+        id: 9,
+        name: "octubre",
+        dia: "01"
+      }, {
+        id: 10,
+        name: "noviembre",
+        dia: "01"
+      }, {
+        id: 11,
+        name: "diciembre",
+        dia: "01"
+      }],
+          buscar = '';
+      console.log("funcion fecha");
+      fecha = fecha.split(" "); // console.log(fecha[0]);
+      // console.log(fecha[2]);
+
+      buscar = meses.find(function (item) {
+        return item.name === fecha[0];
+      });
+      console.log(buscar);
+      var nuevaFecha = new Date(fecha[2], buscar.id, 1);
+      console.log(nuevaFecha); // console.log( nuevaFecha  );
+
+      return nuevaFecha;
     }
+  },
+  computed: {
+    Fdia: function Fdia() {
+      console.log("computed !!!!!!!!!!!!!");
+      var r = this.$refs.calendario; //console.log(r.$el.textContent); 
+
+      console.log(r);
+      return r;
+    }
+  },
+  mounted: function mounted() {
+    console.log("mounted !!!!!!!!!!!!!");
+    var r = this.$refs.calendario;
+    console.log(r.$el.textContent);
+    var button = jquery__WEBPACK_IMPORTED_MODULE_1___default()(".fc-button");
+    button.css("background-color", "#5cb85c !important}");
+    var l = jquery__WEBPACK_IMPORTED_MODULE_1___default()(".fc-left h2").text();
+    console.log("Fecha");
+    console.log(l);
+    this.ajustarDiaDatePicker(l); // console.log("buttonm");
+    // console.log(button);
+
+    console.log(this.Fdia);
   }
 });
 
@@ -112044,10 +112139,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row p-3" }, [
-    _c("div", { staticClass: "col-md-4" }, [_vm._v("\r\n  assa\r\n")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-8" }, [
-      _vm._m(0),
+    _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("h2", [
+          _vm._v("Registrar dias inhabiles paises. " + _vm._s(_vm.Fdia))
+        ]),
+        _vm._v(" "),
+        _c("hr")
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -112079,6 +112178,7 @@ var render = function() {
         { staticClass: "col-md-12" },
         [
           _c("FullCalendar", {
+            ref: "calendario",
             attrs: {
               locale: "es",
               buttonText: {
@@ -112092,7 +112192,7 @@ var render = function() {
               header: {
                 left: "title",
                 center: "",
-                right: "prevYear prev today next  nextYear"
+                right: "prevYear prev proxmes today next  nextYear"
               },
               contentHeight: 300,
               eventRender: _vm.Tool,
@@ -112106,7 +112206,15 @@ var render = function() {
               selectable: false,
               selectMirror: false,
               events: _vm.arrayDiasInhabiles,
-              config: _vm.config
+              config: _vm.config,
+              customButtons: {
+                proxmes: {
+                  text: "Próximo mes",
+                  click: function() {
+                    _vm.console.log("clicked custom button 1!")
+                  }
+                }
+              }
             }
           })
         ],
@@ -112289,18 +112397,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("h2", [_vm._v("Registrar dias inhabiles paises.")]),
-      _vm._v(" "),
-      _c("hr")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
