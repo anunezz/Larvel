@@ -16,6 +16,11 @@ Vue.component('vueex', require('./components/VueEX.vue').default);
 Vue.component('vueexhijo', require('./components/VueEXhijo.vue').default);
 Vue.component('form-component', require('./components/form.vue').default);
 
+///////////////////////////////////
+//Impresion de vue.js
+//////////////////////////////////
+Vue.component('impresion-component', require('./components/Impresion.vue').default);
+
 
 const app = new Vue({
     el: '#app'

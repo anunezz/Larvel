@@ -45,6 +45,13 @@ Route::get('contacto/{nombre?}/{edad?}',function($nombre ='adrian',$edad = 25){
     });
 
 
+
+///////////////////////
+//IMPRESION
+///////////////////////    
+Route::get('/impresion',"Impresion@index");
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
